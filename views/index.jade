@@ -3,11 +3,22 @@ extends layout
 block body
   div(ng-controller='HomeCtrl')
     canvas(id='resistor', width='500', height='200')
-    div.container
+    div.container.quiz-content
+      div.input-group
+        input(type='text', ng-model='value', placeholder="Enter value of resistor in Ohms").form-control
+        span.input-group-btn
+          button(ng-click='submitAnswer(value)').answer-button.btn.btn-default.form-control
+            | Check
       div
         span
-          | Resistor Value: 
+          | Resistor Value:
         span(ng-bind='resistor_value')
+      div
+        ul.unstyled
+          li(ng-repeat='attempt in attempts')
+            span(ng-class="{'label-warning' : !attempt.outcome, 'label-success': attempt.outcome}").label
+              | {{attempt.outcome_display}}
+            span {{attempt.guessed}} <=> {{attempt.actual}}
       div(ui-view)
 
   script(src='js/lib/angular/angular.js')

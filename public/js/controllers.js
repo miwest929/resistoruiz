@@ -5,16 +5,44 @@ var resistor = angular.module('resistor.controllers', []);
 resistor.controller('HomeCtrl', function ($scope, $http, $state) {
   $scope.context = null;
   $scope.resistor_value = "";
+  $scope.resistor = null;
+  $scope.attempts = [];
+
   $scope.initialize = function() {
     var canvas = document.getElementById('resistor');
     $scope.context = canvas.getContext('2d');
 
-    var resistor = randomResistor();
-    paintResistorBody();
-    paintResistorStripes(resistor);
+    $scope.generateNewResistor();
 
-    $scope.resistor_value = resistor.value + " +- " + resistor.resistance_value + "%";
     console.log( $scope.resistor_value );
+  };
+
+  $scope.generateNewResistor = function() {
+    $scope.resistor = randomResistor();
+    paintResistorBody();
+    paintResistorStripes($scope.resistor);
+
+    $scope.resistor_value = $scope.resistor.value + " +-" + $scope.resistor.resistance_value + "%";
+  };
+
+  $scope.submitAnswer = function(userValue) {
+    var guessedValue = parseFloat(userValue);
+    var newAttempt = {
+      actual: $scope.resistor.value,
+      guessed: guessedValue
+    };
+
+    if ($scope.resistor.value === guessedValue) {
+      newAttempt.outcome = true;
+      newAttempt.outcome_display = "Correct";
+    }
+    else {
+      newAttempt.outcome = false;
+      newAttempt.outcome_display = "Incorrect";
+    }
+
+    $scope.attempts.push( newAttempt );
+    $scope.generateNewResistor();
   };
 
   var randomResistor = function() {
