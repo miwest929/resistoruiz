@@ -14,7 +14,6 @@ resistor.controller('HomeCtrl', function ($scope, $http, $state) {
 
     $scope.generateNewResistor();
 
-    console.log( $scope.resistor_value );
   };
 
   $scope.generateNewResistor = function() {
@@ -23,6 +22,7 @@ resistor.controller('HomeCtrl', function ($scope, $http, $state) {
     paintResistorStripes($scope.resistor);
 
     $scope.resistor_value = $scope.resistor.value + " +-" + $scope.resistor.resistance_value + "%";
+    console.log( $scope.resistor_value );
   };
 
   $scope.submitAnswer = function(userValue) {
