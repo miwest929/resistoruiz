@@ -1,7 +1,7 @@
 extends layout
 
 block body
-  div(ng-controller='HomeCtrl')
+  div(ng-controller='HomeCtrl').jumbotron
     canvas(id='resistor', width='500', height='200')
     div.container.quiz-content
       div.input-group
@@ -9,12 +9,17 @@ block body
         span.input-group-btn
           button(ng-click="submitAnswer(value); value=''").answer-button.btn.btn-default.form-control
             | Check
-      div
+      div.answers
         ul.unstyled
           li(ng-repeat='attempt in attempts')
-            span(ng-class="{'label-warning' : !attempt.outcome, 'label-success': attempt.outcome}").label
-              | {{attempt.outcome_display}}
-            span {{attempt.guessed}} <=> {{attempt.actual}}
+            div.row
+              div.col-xs-6.col-md-3
+                span(ng-class="{'label-warning' : !attempt.outcome, 'label-success': attempt.outcome}").label
+                  | {{attempt.outcome_display}}
+              div.col-xs-6.col-md-3
+                span Your guess: {{attempt.guessed}}
+              div.col-xs-6.col-md-3
+                span Actual: {{attempt.actual}}
       div(ui-view)
 
   script(src='js/lib/angular/angular.js')
