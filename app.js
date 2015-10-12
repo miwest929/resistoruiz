@@ -5,13 +5,16 @@ var express = require('express'),
     path = require('path'),
     yaml = require('js-yaml'),
     bodyParser = require('body-parser'),
-    fs = require('fs');
+    fs = require('fs'),
+    compress = require('compression');
 
 var app = module.exports = express();
 
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
+
+app.use(compress());
 app.use(morgan('dev'));
 app.use(methodOverride());
 app.use(bodyParser());

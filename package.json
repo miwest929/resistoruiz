@@ -8,6 +8,7 @@
     "method-override": "^1.0.0",
     "morgan": "^1.0.0",
     "js-yaml": "*",
-    "body-parser": "*"
+    "body-parser": "*",
+    "compression": "*"
   }
 }
